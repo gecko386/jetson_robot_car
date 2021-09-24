@@ -1,0 +1,4 @@
+ To force one interface in GALACTIC edit cyclonedds.xml and modify tag NetworkInterfaceAddress
+ then export CYCLONEDDS_URI var, ex:
+ 
+ export CYCLONEDDS_URI=file://$PWD/cyclonedds.xml
