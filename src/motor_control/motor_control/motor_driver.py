@@ -5,7 +5,6 @@ Created on Tue Aug 17 00:30:18 2021
 
 @author: nvidia
 """
-# -*- coding: utf-8 -*-
 
 try:
     import RPi.GPIO as GPIO
