@@ -4,7 +4,7 @@ import rclpy
 from rclpy.node import Node
 from ackermann_msgs.msg import AckermannDrive
 from .motor_driver import Motors
-import math
+from .dagu5_kine import Rover5
 
 class VehicleSubscriber(Node):
     """
@@ -21,26 +21,22 @@ class VehicleSubscriber(Node):
         # from the video_frames topic. The queue size is 10 messages.
         self._subscriber = self.create_subscription(AckermannDrive, 'ackermann_input', self.process_events, 10)
 
+        #object with car propierties
+        self._car = Rover5()
+
         self._motors = Motors()
         self._motors.enable()
 
     def ackermann_to_motors(self, ackermann_order):
         max_speed = self._motors.MAX_SPEED
 
-        angle = ackermann_order.steering_angle
+        print(ackermann_order)
         speed = ackermann_order.speed
+        angle = ackermann_order.steering_angle
 
-        s1 = speed
-        s2 = speed
+        m1, m2 = self._car.get_motor_speeds(speed*0.5, angle*0.5)
 
-        if angle>0:
-          s2 *= math.cos(angle)
-        elif angle<0:
-          s1 *= math.cos(-angle)
-
-
-        print("Speeds: "+str(s1)+", "+str(s2))
-        return s1*max_speed, s2*max_speed
+        return m1, m2
 
     def process_events(self, data):
         """

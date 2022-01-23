@@ -5,6 +5,7 @@ Created on Tue Aug 17 00:30:18 2021
 
 @author: nvidia
 """
+# -*- coding: utf-8 -*-
 
 try:
     import RPi.GPIO as GPIO
@@ -19,7 +20,9 @@ try:
     output_pin = output_pins.get(GPIO.model, None)
     if output_pin is None:
         raise Exception('PWM not supported on this board')
+    print("using real GPIO")
 except:
+    print("using dummy GPIO")
     from . import gpio_dummy as GPIO
 
 

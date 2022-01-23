@@ -1,117 +1,128 @@
 #!/usr/bin/env python3
 
+import signal
+import sys
+
 #ROS2 packages
 import rclpy
 from rclpy.node import Node
 from ackermann_msgs.msg import AckermannDrive
+from .ackermann_status import AckermannStatus
 
-#keyboard packages
-import pynput
-from pynput import keyboard
+#threading package
+import threading
 
 #math packages
 import math
+
+#keyboard packages
+from sshkeyboard import listen_keyboard, stop_listening
 
 #increment definitions:
 
 SPEED_STEPS = 0.01
 ANGLE_STEPS = (math.pi/(2.0*100.0))
 
-
 class KeyboardPublisher(Node):
     def __init__(self):
         super().__init__('keyboard_publisher')
 
-        #Ackermann orders
-        self._last_angle = 0.0
-        self._last_speed = 0.0
-        self._need_update_ackermann = True
+        #Ackermann object
+        self._ackermann_status = AckermannStatus()
+        self._ackermann_status.set_angle_step(ANGLE_STEPS)
+        self._ackermann_status.set_speed_step(SPEED_STEPS)
 
         self._publisher = self.create_publisher(AckermannDrive, 'ackermann_input', 10)
         timer_period = 0.1  # seconds
-
+        
         # Create the timer
         self.timer = self.create_timer(timer_period, self.timer_callback)
 
-        #keyboard management
-        self._key_buffer = []
-        self._key_buffer = []
-        self._key_listener = keyboard.Listener(
-            on_press=self._on_press)
+        #thread system for keyboard
+        self._lock = threading.Lock()
+        self._key_buff = []
+        self._continue = True;
+        self._key_thread = threading.Thread(target=listen_keyboard, 
+        kwargs={"on_press":self._press_event,
+                "delay_second_char":0.01,
+                "delay_other_chars":0.01,})
 
-        self._ignore_events = False
+        self._key_thread.start()
 
-        self._key_listener.start()
 
-    def _on_press(self, key):
-        if not self._ignore_events:
-            self._key_buffer.append(key)
+    def _press_event(self, key):
+        with self._lock:
+            #print(f"'{key}' pressed")
+            self._key_buff.append(key)
 
-    def clamp_to_one(self, value, limit = 1.0):
-        if value > limit:
-            return limit
-        elif value < -limit:
-            return -limit
+
+    def stop(self):
+        if self._key_thread is None:
+            return
+
+        with self._lock:
+            stop_listening()
+            self._key_thread.join()
+        self._key_thread = None
+
+
+    def __del__(self):
+        self.stop()
+
+    
+    def pull_keys(self):
+        keys = []
+        with self._lock:
+            keys = self._key_buff
+            self._key_buff = []
+        return keys
+    
+
+    def _process_key_arrows(self, k):
+        if k == "up":
+            self._ackermann_status.increase_speed()
+        elif k == "down":
+            self._ackermann_status.decrease_speed()
+        elif k == "right":
+            self._ackermann_status.increase_angle()
+        elif k == "left":
+            self._ackermann_status.decrease_angle()
         else:
-            return value
-
-    def process_key_arrows(self, k):
-        if k == keyboard.Key.up:
-            val = self.clamp_to_one(self._last_speed + SPEED_STEPS)
-            if self._last_speed == val:
-                return
-            
-            self._last_speed = val
-            self._need_update_ackermann = True
-
-        elif k == keyboard.Key.down:
-            val = self.clamp_to_one(self._last_speed - SPEED_STEPS)
-            if self._last_speed == val:
-                return
-            
-            self._last_speed = val
-            self._need_update_ackermann = True
-
-        elif k == keyboard.Key.right:
-            val = self.clamp_to_one(self._last_angle + ANGLE_STEPS)
-            if self._last_angle == val:
-                return
-            
-            self._last_angle = val
-            self._need_update_ackermann = True
-
-        elif k == keyboard.Key.left:
-            val = self.clamp_to_one(self._last_angle - ANGLE_STEPS)
-            if self._last_angle == val:
-                return
-            
-            self._last_angle = val
-            self._need_update_ackermann = True
+            print("fuck: "+k)
+    
 
     def process_events(self):
-        self._ignore_events = True
-        keys = self._key_buffer.copy()
-        self._key_buffer = []
-        self._ignore_events = False
+        
+        keys = self.pull_keys()
         for k in keys:
-            self.process_key_arrows(k)
+            self._process_key_arrows(k)
             
     def send_ackermann_msg(self):
-        if self._need_update_ackermann:
+        speed, angle = self._ackermann_status.pull_status()
+        if speed is not None:
             order = AckermannDrive()
-            order.steering_angle = self._last_angle
-            order.speed = self._last_speed
+            order.speed = speed
+            order.steering_angle = angle
             self._publisher.publish(order)
             self.get_logger().info('Publishing Ackermann Msg:' + str(order))
-            self._need_update_ackermann = False
 
     def timer_callback(self):
         """
         Callback function.
         This function gets called every 0.1 seconds.
         """
-        self.process_events()        
+        self.process_events()
         self.send_ackermann_msg()
+
+def program_exit(keyboard_publisher):
+    keyboard_publisher.stop()
+    keyboard_publisher.destroy_node()
+
+    # Shutdown the ROS client library for Python
+    rclpy.shutdown()
+    sys.exit()
+
+    
 
 def main(args=None):
     # Initialize the rclpy library
@@ -119,17 +130,16 @@ def main(args=None):
   
     # Create the node
     keyboard_publisher = KeyboardPublisher()
-  
-    # Spin the node so the callback function is called.
-    rclpy.spin(keyboard_publisher)
-  
-    # Destroy the node explicitly
-    # (optional - otherwise it will be done automatically
-    # when the garbage collector destroys the node object)
-    keyboard_publisher.destroy_node()
-  
-    # Shutdown the ROS client library for Python
-    rclpy.shutdown()
+    try:
+        # Spin the node so the callback function is called.
+        rclpy.spin(keyboard_publisher)
+    except KeyboardInterrupt:
+        # Destroy the node explicitly
+        # (optional - otherwise it will be done automatically
+        # when the garbage collector destroys the node object)
+        pass
+    finally:
+        program_exit(keyboard_publisher)
   
 if __name__ == '__main__':
   main()
