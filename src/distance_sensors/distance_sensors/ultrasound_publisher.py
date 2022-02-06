@@ -7,7 +7,6 @@ from rclpy.node import Node
 
 from sensor_msgs.msg import Range
 
-import time
 try:
     import RPi.GPIO as GPIO
 
@@ -21,8 +20,10 @@ try:
     output_pin = output_pins.get(GPIO.model, None)
     if output_pin is None:
         raise Exception('PWM not supported on this board')
+    print("using real GPIO")
 except:
-    from . import gpio_dummy as GPIO
+    print("using dummy GPIO")
+    from ../../common import gpio_dummy as GPIO
 
 
 

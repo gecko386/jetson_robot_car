@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 #GPIO Dummy
 
 CLARA_AGX_XAVIER = 'CLARA_AGX_XAVIER'
