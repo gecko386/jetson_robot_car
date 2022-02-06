@@ -23,7 +23,7 @@ try:
     print("using real GPIO")
 except:
     print("using dummy GPIO")
-    from ../../common import gpio_dummy as GPIO
+    from common import gpio_dummy as GPIO
 
 
 
