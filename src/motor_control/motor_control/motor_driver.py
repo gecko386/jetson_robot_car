@@ -23,7 +23,7 @@ try:
     print("using real GPIO")
 except:
     print("using dummy GPIO")
-    from . import gpio_dummy as GPIO
+    from ../../common import gpio_dummy as GPIO
 
 
 # Motor speeds for this library are specified as numbers between -MAX_SPEED and
