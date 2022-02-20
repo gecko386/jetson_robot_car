@@ -94,7 +94,7 @@ class AckermannStatus(object):
             self._last_pulled_angle = self._current_angle
             self._last_pulled_speed = self._current_speed
 
-            return self._current_speed, self._current_angle
+            return float(self._current_speed), float(self._current_angle)
         else:
             return None, None
 
@@ -119,7 +119,7 @@ class AckermannStatus(object):
     def decrease_speed(self):
         if self._current_speed > -1.0:
             if self._current_speed == 1.0:
-                self._current_speed = self.speed_max_clamp_value
+                self._current_speed = self._speed_max_clamp_value
             elif self._current_speed == 0.0:
                 self._current_speed = -self._speed_min_clamp_value
             self._current_speed = self._clamp_speed_value(self._current_speed - self._speed_step)

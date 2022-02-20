@@ -2,6 +2,7 @@
 
 import signal
 import sys
+import traceback
 
 #ROS2 packages
 import rclpy
@@ -138,6 +139,8 @@ def main(args=None):
         # (optional - otherwise it will be done automatically
         # when the garbage collector destroys the node object)
         pass
+    except Exception as e:
+        traceback.print_exception(*sys.exc_info())
     finally:
         program_exit(keyboard_publisher)
   
