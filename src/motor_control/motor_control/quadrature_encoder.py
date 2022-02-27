@@ -14,10 +14,10 @@ class Encoder:
         self.callback = callback
         GPIO.setup(self.leftPin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         GPIO.setup(self.rightPin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        GPIO.add_event_detect(self.leftPin, GPIO.BOTH, callback=self.transitionOccurred)  
-        GPIO.add_event_detect(self.rightPin, GPIO.BOTH, callback=self.transitionOccurred)  
+        GPIO.add_event_detect(self.leftPin, GPIO.BOTH, callback=self.transition_occurred)  
+        GPIO.add_event_detect(self.rightPin, GPIO.BOTH, callback=self.transition_occurred)  
 
-    def transitionOccurred(self, channel):
+    def transition_occurred(self, channel):
         p1 = GPIO.input(self.leftPin)
         p2 = GPIO.input(self.rightPin)
         newState = "{}{}".format(p1, p2)
@@ -63,5 +63,7 @@ class Encoder:
                 
         self.state = newState
 
-    def getValue(self):
-        return self.value
+    def pull_value(self):
+        v = self.value
+        self.value = 0
+        return v
