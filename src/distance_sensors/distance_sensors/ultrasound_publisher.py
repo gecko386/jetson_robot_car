@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import time
+
 from distance_sensors import distance_sensors
 import rclpy
 from rclpy.node import Node
