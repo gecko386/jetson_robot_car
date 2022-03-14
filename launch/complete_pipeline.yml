@@ -1,0 +1,20 @@
+version: "2.3"
+services:
+  control:
+    image: "ros:galactic-pytorch-l4t-r32.6.1 "
+    environment:
+      - ROS_DOMAIN_ID=1
+      - CYCLONEDDS_URI=file:///home/nvidia/jetson_robot_car/configs/dds/cyclone_config.xml
+      - DISPLAY=$DISPLAY
+    volumes:
+      - "/tmp/argus_socket:/tmp/argus_socket"
+      - "/home:/home"
+    command: source /home/nvidia/jetson_robot_car/install/local_setup.bash && ros2 run motor_control vehicle_subscriber
+    network_mode: host
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            device_ids: ['0']
+            capabilities: [gpu]
