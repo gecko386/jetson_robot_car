@@ -1,7 +1,7 @@
 version: "2.3"
 services:
   control:
-    image: "ros:galactic-pytorch-l4t-r32.6.1 "
+    image: "ros:galactic-pytorch-l4t-r32.6.1"
     environment:
       - ROS_DOMAIN_ID=1
       - CYCLONEDDS_URI=file:///home/nvidia/jetson_robot_car/configs/dds/cyclone_config.xml
