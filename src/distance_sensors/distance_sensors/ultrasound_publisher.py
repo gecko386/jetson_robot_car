@@ -36,8 +36,9 @@ class UltrasoundPublisher(Node):
         self.declare_parameter('trigger_pin', -1)
         self.declare_parameter('echo_pin', -1)
 
-
         #configure pins
+        GPIO.setmode(GPIO.BCM)
+
         GPIO.setup(self.get_parameter('trigger_pin').get_parameter_value().integer_value, GPIO.OUT)
         GPIO.setup(self.get_parameter('echo_pin').get_parameter_value().integer_value, GPIO.IN)
 
