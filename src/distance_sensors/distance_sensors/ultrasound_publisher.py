@@ -43,7 +43,7 @@ class UltrasoundPublisher(Node):
         GPIO.setup(self.get_parameter('echo_pin').get_parameter_value().integer_value, GPIO.IN)
 
         self._publisher = self.create_publisher(Range, 'us_'+self.get_parameter('ultrasound_id').get_parameter_value().string_value, 10)
-        timer_period = 0.05  # seconds
+        timer_period = 0.1  # seconds
       
         # Create the timer
         self.timer = self.create_timer(timer_period, self.timer_callback)
@@ -81,7 +81,7 @@ class UltrasoundPublisher(Node):
         range.min_range = 1.9
         range.max_range = 450.0
         range.radiation_type=Range.ULTRASOUND
-        range.range = distance
+        range.range = float(distance)
 
         #timestamp
         range.header.stamp = self.get_clock().now().to_msg()
