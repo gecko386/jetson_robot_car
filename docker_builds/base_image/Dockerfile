@@ -7,6 +7,6 @@ RUN chmod 755 /tmp/update_entrypoint.sh
 RUN /tmp/update_entrypoint.sh
 RUN rm /tmp/update_entrypoint.sh
 
-ENTRYPOINT ["/docker_entrypoint.sh"]
+ENTRYPOINT ["/ros_entrypoint.sh"]
 CMD ["bash"]
 WORKDIR /
