@@ -1,6 +1,6 @@
 version: "2.3"
 services:
-  control:
+  motion_control:
     image: "base_image"
     environment:
       - ROS_DOMAIN_ID=1
@@ -10,6 +10,25 @@ services:
       - "/tmp/argus_socket:/tmp/argus_socket"
       - "/home:/home"
     command: ros2 run motor_control vehicle_subscriber
+    network_mode: host
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            device_ids: ['0']
+            capabilities: [gpu]
+
+  ultrasound_1:
+    image: "base_image"
+    environment:
+      - ROS_DOMAIN_ID=1
+      - CYCLONEDDS_URI=file:///home/nvidia/jetson_robot_car/configs/dds/cyclone_config.xml
+      - DISPLAY=$DISPLAY
+    volumes:
+      - "/tmp/argus_socket:/tmp/argus_socket"
+      - "/home:/home"
+    command: ros2 run distance_sensors ultrasound_publisher --ros-args -p ultrasound_id:=Ultrasound_1 -p trigger_pin:=16 -p echo_pin:=20
     network_mode: host
     deploy:
       resources:
