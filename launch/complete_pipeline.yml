@@ -25,9 +25,16 @@ services:
       - ROS_DOMAIN_ID=1
       - CYCLONEDDS_URI=file:///home/nvidia/jetson_robot_car/configs/dds/cyclone_config.xml
       - DISPLAY=$DISPLAY
+      
     volumes:
       - "/tmp/argus_socket:/tmp/argus_socket"
       - "/home:/home"
+      - "/sys:/sys"
+      - "/proc/device-tree/compatible:/proc/device-tree/compatible"
+ 
+    devices: 
+      - "/dev/spidev0.0:/dev/spidev0.0:rw"
+      
     command: ros2 run distance_sensors ultrasound_publisher --ros-args -p ultrasound_id:=ultrasound_1 -p trigger_pin:=16 -p echo_pin:=20
     network_mode: host
     deploy:
