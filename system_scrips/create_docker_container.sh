@@ -11,4 +11,9 @@ cd jetson-containers
 ./scripts/docker_build_ros.sh --distro galactic  --with-pytorch
 exit_if_last_command_failed "Cannot create container. Please, check logs"
 
+go_to_folder_or_die /home/nvidia/jetson_robot_car/docker_builds/base_image
+sudo docker build --rm -t "base_image" --build-arg BASE_IMAGE="ros:galactic-pytorch-l4t-r32.6.1" -f Dockerfile .
+
+exit_if_last_command_failed "Cannot create container. Please, check logs"
+
 information "ROS2 Galactic container created"
