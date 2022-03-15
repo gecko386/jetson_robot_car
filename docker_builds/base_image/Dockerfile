@@ -3,11 +3,6 @@ FROM ${BASE_IMAGE}
 
 RUN pip3 install Jetson.GPIO
 
-# copy compatible file to use GPIO
-RUN mkdir -p /proc/device-tree/
-
-COPY ./compatible /proc/device-tree/compatible
-
 # generate entrypoint
 COPY ./update_entrypoint.sh /tmp/.
 RUN chmod 755 /tmp/update_entrypoint.sh

@@ -27,12 +27,23 @@ services:
       - DISPLAY=$DISPLAY
       
     volumes:
+      - "/tmp/.X11-unix:/tmp/.X11-unix"
       - "/tmp/argus_socket:/tmp/argus_socket"
       - "/home:/home"
-      - "/sys:/sys"
-      - "/proc/device-tree/compatible:/proc/device-tree/compatible"
+      - "/etc/udev/rules.d:/etc/udev/rules.d"
+      - "/dev:/dev"
+      - "/sys/class/gpio:/sys/class/gpio"
+      - "/sys/devices:/sys/devices"
+      - "/dev/gpiochip0:/dev/gpiochip0"
+      - "/dev/gpiochip1:/dev/gpiochip1"
+      - "/sys/firmware/devicetree/base:/sys/firmware/devicetree/base"
+
+    devices:
+      - "/dev/gpiochip0:/dev/gpiochip0"
+      - "/dev/gpiochip1:/dev/gpiochip1"
 
     command: ros2 run distance_sensors ultrasound_publisher --ros-args -p ultrasound_id:=ultrasound_1 -p trigger_pin:=16 -p echo_pin:=20
+    privileged: true
     network_mode: host
     deploy:
       resources:
