@@ -28,7 +28,7 @@ services:
     volumes:
       - "/tmp/argus_socket:/tmp/argus_socket"
       - "/home:/home"
-    command: ros2 run distance_sensors ultrasound_publisher --ros-args -p ultrasound_id:=Ultrasound_1 -p trigger_pin:=16 -p echo_pin:=20
+    command: ros2 run distance_sensors ultrasound_publisher --ros-args -p ultrasound_id:=ultrasound_1 -p trigger_pin:=16 -p echo_pin:=20
     network_mode: host
     deploy:
       resources:
