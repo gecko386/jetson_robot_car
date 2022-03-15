@@ -79,7 +79,7 @@ class UltrasoundPublisher(Node):
 
         range = Range()
         range.min_range = 1.9
-        range.max_range = 450
+        range.max_range = 450.0
         range.radiation_type=Range.ULTRASOUND
         range.range = distance_sensors
 
