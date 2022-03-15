@@ -34,8 +34,8 @@ class UltrasoundPublisher(Node):
         super().__init__('ultrasound_publisher')
 
         self.declare_parameter('ultrasound_id', None, ParameterDescriptor(description='string to identify the ultrasound sensor, this will be the postfix of topics: us_'))
-        self.declare_parameter('trigger_pin', None, ParameterDescriptor(description=''BCM pin to send ultrasound trigger'))
-        self.declare_parameter('echo_pin', None, ParameterDescriptor(description=''BCM pin to wait ultrasound response'))
+        self.declare_parameter('trigger_pin', None, ParameterDescriptor(description='BCM pin to send ultrasound trigger'))
+        self.declare_parameter('echo_pin', None, ParameterDescriptor(description='BCM pin to wait ultrasound response'))
 
 
         #configure pins
