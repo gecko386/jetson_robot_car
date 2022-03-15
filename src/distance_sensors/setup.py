@@ -20,6 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'ultrasound_publisher = distance_sensors.ultrasound_publisher:main',
         ],
     },
 )
