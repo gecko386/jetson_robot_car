@@ -75,13 +75,13 @@ class UltrasoundPublisher(Node):
         time_elapsed = stop_time - start_time
         # multiply with the sonic speed (34300 cm/s)
         # and divide by 2, because there and back
-        distance = (time_elapsed * 34300) / 2
+        distance = float((time_elapsed * 34300) / 2.0)
 
         range = Range()
         range.min_range = 1.9
         range.max_range = 450.0
         range.radiation_type=Range.ULTRASOUND
-        range.range = distance_sensors
+        range.range = distance
 
         #timestamp
         range.header.stamp = self.get_clock().now().to_msg()
