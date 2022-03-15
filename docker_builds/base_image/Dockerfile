@@ -4,6 +4,8 @@ FROM ${BASE_IMAGE}
 RUN pip3 install Jetson.GPIO
 
 # copy compatible file to use GPIO
+RUN mkdir -p /proc/device-tree/
+
 COPY ./compatible /proc/device-tree/compatible
 
 # generate entrypoint
