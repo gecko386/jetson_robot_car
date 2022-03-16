@@ -60,14 +60,14 @@ class UltrasoundPublisher(Node):
         time.sleep(0.00001)
         GPIO.output(self.get_parameter('trigger_pin').get_parameter_value().integer_value, False)
 
-        start_time = time.time()
-        stop_time = time.time()
 
+        start_time = time.time()
         # save StartTime
         while GPIO.input(self.get_parameter('echo_pin').get_parameter_value().integer_value) == 0:
             start_time = time.time()
 
         # save time of arrival
+        stop_time = time.time()
         while GPIO.input(self.get_parameter('echo_pin').get_parameter_value().integer_value) == 1:
             stop_time = time.time()
 
