@@ -92,7 +92,7 @@ class UltrasoundPublisher(Node):
         self._publisher.publish(range)
 
         self.get_logger().info('Publishing ultrasound_'+self.get_parameter('ultrasound_id').get_parameter_value().string_value+' with value: '+str(distance))
-
+        time.sleep(1)
 
 def main(args=None):
     # Initialize the rclpy library
