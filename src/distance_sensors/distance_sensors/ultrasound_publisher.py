@@ -63,11 +63,13 @@ class UltrasoundPublisher(Node):
 
         start_time = time.time()
         # save StartTime
+        self.get_logger().info('Publishing ultrasound_'+self.get_parameter('ultrasound_id').get_parameter_value().string_value+'wait 0')
         while GPIO.input(self.get_parameter('echo_pin').get_parameter_value().integer_value) == 0:
             start_time = time.time()
 
         # save time of arrival
         stop_time = time.time()
+        self.get_logger().info('Publishing ultrasound_'+self.get_parameter('ultrasound_id').get_parameter_value().string_value+'wait 1')
         while GPIO.input(self.get_parameter('echo_pin').get_parameter_value().integer_value) == 1:
             stop_time = time.time()
 
