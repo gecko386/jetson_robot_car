@@ -97,7 +97,7 @@ class UltrasoundPublisher(Node):
         #time.sleep(1)
 
         # if distance is too low we have to estabilize sensor
-        if distance < 2:
+        if distance < 3.5:
             time.sleep(1)
 
 def main(args=None):
