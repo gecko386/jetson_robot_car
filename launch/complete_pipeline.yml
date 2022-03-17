@@ -19,7 +19,8 @@ services:
             device_ids: ['0']
             capabilities: [gpu]
 
-  ultrasound_1:
+
+  ultrasound_Front:
     image: "base_image"
     environment:
       - ROS_DOMAIN_ID=1
@@ -42,7 +43,143 @@ services:
       - "/dev/gpiochip0:/dev/gpiochip0"
       - "/dev/gpiochip1:/dev/gpiochip1"
 
-    command: ros2 run distance_sensors ultrasound_publisher --ros-args -p ultrasound_id:=ultrasound_1 -p trigger_pin:=16 -p echo_pin:=20
+    command: ros2 run distance_sensors ultrasound_publisher --ros-args -p ultrasound_id:=Front -p trigger_pin:=17 -p echo_pin:=27
+    privileged: true
+    network_mode: host
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            device_ids: ['0']
+            capabilities: [gpu]
+
+  ultrasound_FL:
+    image: "base_image"
+    environment:
+      - ROS_DOMAIN_ID=1
+      - CYCLONEDDS_URI=file:///home/nvidia/jetson_robot_car/configs/dds/cyclone_config.xml
+      - DISPLAY=$DISPLAY
+      
+    volumes:
+      - "/tmp/.X11-unix:/tmp/.X11-unix"
+      - "/tmp/argus_socket:/tmp/argus_socket"
+      - "/home:/home"
+      - "/etc/udev/rules.d:/etc/udev/rules.d"
+      - "/dev:/dev"
+      - "/sys/class/gpio:/sys/class/gpio"
+      - "/sys/devices:/sys/devices"
+      - "/dev/gpiochip0:/dev/gpiochip0"
+      - "/dev/gpiochip1:/dev/gpiochip1"
+      - "/sys/firmware/devicetree/base:/sys/firmware/devicetree/base"
+
+    devices:
+      - "/dev/gpiochip0:/dev/gpiochip0"
+      - "/dev/gpiochip1:/dev/gpiochip1"
+
+    command: ros2 run distance_sensors ultrasound_publisher --ros-args -p ultrasound_id:=FL -p trigger_pin:=10 -p echo_pin:=9
+    privileged: true
+    network_mode: host
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            device_ids: ['0']
+            capabilities: [gpu]
+
+  ultrasound_FR:
+    image: "base_image"
+    environment:
+      - ROS_DOMAIN_ID=1
+      - CYCLONEDDS_URI=file:///home/nvidia/jetson_robot_car/configs/dds/cyclone_config.xml
+      - DISPLAY=$DISPLAY
+      
+    volumes:
+      - "/tmp/.X11-unix:/tmp/.X11-unix"
+      - "/tmp/argus_socket:/tmp/argus_socket"
+      - "/home:/home"
+      - "/etc/udev/rules.d:/etc/udev/rules.d"
+      - "/dev:/dev"
+      - "/sys/class/gpio:/sys/class/gpio"
+      - "/sys/devices:/sys/devices"
+      - "/dev/gpiochip0:/dev/gpiochip0"
+      - "/dev/gpiochip1:/dev/gpiochip1"
+      - "/sys/firmware/devicetree/base:/sys/firmware/devicetree/base"
+
+    devices:
+      - "/dev/gpiochip0:/dev/gpiochip0"
+      - "/dev/gpiochip1:/dev/gpiochip1"
+
+    command: ros2 run distance_sensors ultrasound_publisher --ros-args -p ultrasound_id:=FR -p trigger_pin:=8 -p echo_pin:=7
+    privileged: true
+    network_mode: host
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            device_ids: ['0']
+            capabilities: [gpu]
+
+  ultrasound_RL:
+    image: "base_image"
+    environment:
+      - ROS_DOMAIN_ID=1
+      - CYCLONEDDS_URI=file:///home/nvidia/jetson_robot_car/configs/dds/cyclone_config.xml
+      - DISPLAY=$DISPLAY
+      
+    volumes:
+      - "/tmp/.X11-unix:/tmp/.X11-unix"
+      - "/tmp/argus_socket:/tmp/argus_socket"
+      - "/home:/home"
+      - "/etc/udev/rules.d:/etc/udev/rules.d"
+      - "/dev:/dev"
+      - "/sys/class/gpio:/sys/class/gpio"
+      - "/sys/devices:/sys/devices"
+      - "/dev/gpiochip0:/dev/gpiochip0"
+      - "/dev/gpiochip1:/dev/gpiochip1"
+      - "/sys/firmware/devicetree/base:/sys/firmware/devicetree/base"
+
+    devices:
+      - "/dev/gpiochip0:/dev/gpiochip0"
+      - "/dev/gpiochip1:/dev/gpiochip1"
+
+    command: ros2 run distance_sensors ultrasound_publisher --ros-args -p ultrasound_id:=RL -p trigger_pin:=19 -p echo_pin:=26
+    privileged: true
+    network_mode: host
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            device_ids: ['0']
+            capabilities: [gpu]
+
+  ultrasound_RR:
+    image: "base_image"
+    environment:
+      - ROS_DOMAIN_ID=1
+      - CYCLONEDDS_URI=file:///home/nvidia/jetson_robot_car/configs/dds/cyclone_config.xml
+      - DISPLAY=$DISPLAY
+      
+    volumes:
+      - "/tmp/.X11-unix:/tmp/.X11-unix"
+      - "/tmp/argus_socket:/tmp/argus_socket"
+      - "/home:/home"
+      - "/etc/udev/rules.d:/etc/udev/rules.d"
+      - "/dev:/dev"
+      - "/sys/class/gpio:/sys/class/gpio"
+      - "/sys/devices:/sys/devices"
+      - "/dev/gpiochip0:/dev/gpiochip0"
+      - "/dev/gpiochip1:/dev/gpiochip1"
+      - "/sys/firmware/devicetree/base:/sys/firmware/devicetree/base"
+
+    devices:
+      - "/dev/gpiochip0:/dev/gpiochip0"
+      - "/dev/gpiochip1:/dev/gpiochip1"
+
+    command: ros2 run distance_sensors ultrasound_publisher --ros-args -p ultrasound_id:=RR -p trigger_pin:=16 -p echo_pin:=20
     privileged: true
     network_mode: host
     deploy:
