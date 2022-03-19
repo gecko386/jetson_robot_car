@@ -6,10 +6,25 @@ services:
       - ROS_DOMAIN_ID=1
       - CYCLONEDDS_URI=file:///home/nvidia/jetson_robot_car/configs/dds/cyclone_config.xml
       - DISPLAY=$DISPLAY
+
     volumes:
+      - "/tmp/.X11-unix:/tmp/.X11-unix"
       - "/tmp/argus_socket:/tmp/argus_socket"
       - "/home:/home"
+      - "/etc/udev/rules.d:/etc/udev/rules.d"
+      - "/dev:/dev"
+      - "/sys/class/gpio:/sys/class/gpio"
+      - "/sys/devices:/sys/devices"
+      - "/dev/gpiochip0:/dev/gpiochip0"
+      - "/dev/gpiochip1:/dev/gpiochip1"
+      - "/sys/firmware/devicetree/base:/sys/firmware/devicetree/base"
+
+    devices:
+      - "/dev/gpiochip0:/dev/gpiochip0"
+      - "/dev/gpiochip1:/dev/gpiochip1"
+
     command: ros2 run motor_control vehicle_subscriber
+    privileged: true
     network_mode: host
     deploy:
       resources:
