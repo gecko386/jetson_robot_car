@@ -37,8 +37,8 @@ class VehicleSubscriber(Node):
 
         #m1, m2 = self._car.get_motor_speeds(speed*0.5, angle*0.5)
 
-        m1 = speed * (math.sin(angle) + math.cos(angle))
-        m2 = speed * (math.sin(angle) - math.cos(angle))
+        m1 = speed * (math.cos(angle) - math.sin(angle))
+        m2 = speed * (math.sin(angle) + math.cos(angle))
 
         self.get_logger().info('Motor 1 speed:' + str(m1))
         self.get_logger().info('Motor 2 speed:' + str(m2))
