@@ -6,6 +6,8 @@ from ackermann_msgs.msg import AckermannDrive
 from .motor_driver import Motors
 from .dagu5_kine import Rover5
 
+import math
+
 class VehicleSubscriber(Node):
     """
     Create an VehicleSubscriber class, which is a subclass of the Node class.
@@ -33,7 +35,10 @@ class VehicleSubscriber(Node):
         speed = ackermann_order.speed
         angle = ackermann_order.steering_angle
 
-        m1, m2 = self._car.get_motor_speeds(speed*0.5, angle*0.5)
+        #m1, m2 = self._car.get_motor_speeds(speed*0.5, angle*0.5)
+
+        m1 = speed * (math.sin(angle) + math.cos(angle))
+        m2 = speed * (math.sin(angle) - math.cos(angle))
 
         self.get_logger().info('Motor 1 speed:' + str(m1))
         self.get_logger().info('Motor 2 speed:' + str(m2))
