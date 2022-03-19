@@ -60,7 +60,7 @@ class Motor(object):
         GPIO.setup(dir_pin, GPIO.OUT, initial=GPIO.HIGH) # enable driver by default
         GPIO.setup(pwm_pin, GPIO.OUT, initial=GPIO.HIGH)
         # 20 kHz PWM
-        self.pwm = GPIO.PWM(pwm_pin, 100)
+        self.pwm = GPIO.PWM(pwm_pin, 1000000000)
         self.pwm.start(0)
         
     def setSpeed(self, speed):
