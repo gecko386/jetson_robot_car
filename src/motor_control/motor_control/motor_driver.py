@@ -86,6 +86,8 @@ class Motor(object):
         return not GPIO.input(self.flt_pin)
     
     def __del__(self):
+        self.setSpeeds(0, 0)
+        self.disable()
         self.pwm.stop()
 
 class Motors(object):
