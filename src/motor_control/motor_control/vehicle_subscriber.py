@@ -30,7 +30,6 @@ class VehicleSubscriber(Node):
     def ackermann_to_motors(self, ackermann_order):
         max_speed = self._motors.MAX_SPEED
 
-        print(ackermann_order)
         speed = ackermann_order.speed
         angle = ackermann_order.steering_angle
 
