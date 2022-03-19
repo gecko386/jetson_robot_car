@@ -19,7 +19,7 @@ class VehicleSubscriber(Node):
         
         # Create the subscriber. This subscriber will receive an Image
         # from the video_frames topic. The queue size is 10 messages.
-        self._subscriber = self.create_subscription(AckermannDrive, 'ackermann_input', self.process_events, 10)
+        self._subscriber = self.create_subscription(AckermannDrive, 'ackermann_input', self.process_events, 50)
 
         #object with car propierties
         self._car = Rover5()

@@ -60,7 +60,7 @@ class Motor(object):
         GPIO.setup(dir_pin, GPIO.OUT, initial=GPIO.HIGH) # enable driver by default
         GPIO.setup(pwm_pin, GPIO.OUT, initial=GPIO.HIGH)
         # 20 kHz PWM
-        self.pwm = GPIO.PWM(pwm_pin, 50)
+        self.pwm = GPIO.PWM(pwm_pin, 100)
         self.pwm.start(0)
         
     def setSpeed(self, speed):
@@ -70,13 +70,12 @@ class Motor(object):
         else:
             dir_value = GPIO.LOW
 
-        if speed > MAX_SPEED:
-            speed = MAX_SPEED
+        if speed > 1.0:
+            speed = 1.0
 
         GPIO.output(self.dir_pin, dir_value)
-        print(speed * 100.0 / MAX_SPEED)
-        self.pwm.ChangeDutyCycle(int(speed * 100.0 / MAX_SPEED))
-        #duty cycle in range 0-1000000 as expected by pigpio
+        print(speed * 100.0)
+        self.pwm.ChangeDutyCycle(int(speed * 100.0))
 
     def enable(self):
         GPIO.output(self.en_pin, GPIO.HIGH)
