@@ -36,6 +36,9 @@ class VehicleSubscriber(Node):
 
         m1, m2 = self._car.get_motor_speeds(speed*0.5, angle*0.5)
 
+        self.get_logger().info('Motor 1 speed:' + str(m1))
+        self.get_logger().info('Motor 2 speed:' + str(m2))
+
         return m1, m2
 
     def process_events(self, data):
