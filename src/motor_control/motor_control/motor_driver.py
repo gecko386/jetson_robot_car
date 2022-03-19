@@ -74,8 +74,7 @@ class Motor(object):
             speed = 1.0
 
         GPIO.output(self.dir_pin, dir_value)
-        print(speed * 100.0)
-        #self.pwm.ChangeDutyCycle(int(speed * 100.0))
+        self.pwm.ChangeDutyCycle(int(speed * 100.0))
 
     def enable(self):
         GPIO.output(self.en_pin, GPIO.HIGH)
