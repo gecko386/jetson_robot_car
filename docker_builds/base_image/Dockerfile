@@ -7,8 +7,6 @@ RUN apt update && apt install -y --no-install-recommends \
 		curl \
         cmake \
 		libboost-all-dev \
-		libopencv-dev \
-		python3-opencv \
 		python3-scipy \
 		qt5-default \
         python3-pip \
