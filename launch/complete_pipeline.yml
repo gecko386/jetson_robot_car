@@ -204,3 +204,27 @@ services:
           - driver: nvidia
             device_ids: ['0']
             capabilities: [gpu]
+
+  lidar:
+    image: "base_image"
+    environment:
+      - ROS_DOMAIN_ID=1
+      - CYCLONEDDS_URI=file:///home/nvidia/jetson_robot_car/configs/dds/cyclone_config.xml
+      - DISPLAY=$DISPLAY
+      
+    volumes:
+      - "/tmp/.X11-unix:/tmp/.X11-unix"
+      - "/tmp/argus_socket:/tmp/argus_socket"
+      - "/home:/home"
+      - "/sys/devices:/sys/devices"
+
+    command: ros2 run run ydldiar ydlidar_client --ros-args -p port:=/dev/ydlidar
+    privileged: true
+    network_mode: host
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            device_ids: ['0']
+            capabilities: [gpu]

@@ -22,6 +22,15 @@ RUN apt update && apt install -y --no-install-recommends \
         librealsense2-dev \
     && rm -rf /var/lib/apt/lists/*;
 
+#install YLIDAR
+WORKDIR /opt/
+RUN git clone https://github.com/YDLIDAR/ydlidar_ros2
+WORKDIR /opt/ydlidar_ros2
+RUN source "/opt/ros/galactic/install/setup.bash" && colcon build
+WORKDIR /opt/ydlidar_ros2/ydlidar_ros2/startup
+RUN sudo chmod 777 ./*
+RUN sh initenv.sh
+
 #install realsense ros2 wrapper
 RUN mkdir -p /opt/ros_realsense/src
 WORKDIR /opt/ros_realsense/src
