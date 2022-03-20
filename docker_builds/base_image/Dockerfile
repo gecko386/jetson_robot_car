@@ -28,8 +28,8 @@ WORKDIR /opt/ros_realsense/src
 RUN git clone --depth 1 --branch `git ls-remote --tags https://github.com/IntelRealSense/realsense-ros.git | grep -Po "(?<=tags/)3.\d+\.\d+" | sort -V | tail -1` https://github.com/IntelRealSense/realsense-ros.git
 WORKDIR /opt/ros_realsense/
 #RUN rosdep init
-RUN rosdep update
-RUN rosdep install -i --from-path src --rosdistro "galactic" --os=ubuntu:galactic --skip-keys=librealsense2 -y
+#RUN rosdep update
+#RUN rosdep install -i --from-path src --rosdistro "galactic" --os=ubuntu:galactic --skip-keys=librealsense2 -y
 RUN colcon build
 
 #install jetson-inference
