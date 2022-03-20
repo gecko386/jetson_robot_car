@@ -40,7 +40,30 @@ class Rover5(object):
 
     def get_motor_speeds(self, u, w):
         #return u + D*w/2.0, u - D*w/2.0
-        return u + w*2/math.pi, u - w*2/math.pi
+        u1 = u + w*2/math.pi
+        u2 = u - w*2/math.pi
+
+        if u1 > 1.0:
+            d = u1 - 1.0
+            u2 = u2 - d
+            u1 = 1.0
+
+        elif u1 < -1.0:
+            d = u1 + 1.0
+            u2 = u2 + d
+            u1 = -1.0
+
+        if u2 > 1.0:
+            d = u2 - 1.0
+            u1 = u1 - d
+            u2 = 1.0
+
+        elif u2 < -1.0:
+            d = u2 + 1.0
+            u1 = u1 + d
+            u2 = -1.0
+
+        return u1, u2
 
     def normalize_linear_speed(self, u):
         return u/MAX_LINEAR_SPEED
