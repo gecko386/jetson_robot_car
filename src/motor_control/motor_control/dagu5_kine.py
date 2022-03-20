@@ -45,22 +45,22 @@ class Rover5(object):
 
         if u1 > 1.0:
             d = u1 - 1.0
-            u2 = u2 - d
+            u2 = u2 - d/2.0
             u1 = 1.0
 
         elif u1 < -1.0:
             d = u1 + 1.0
-            u2 = u2 + d
+            u2 = u2 - d/2.0
             u1 = -1.0
 
         if u2 > 1.0:
             d = u2 - 1.0
-            u1 = u1 - d
+            u1 = u1 - d/2.0
             u2 = 1.0
 
         elif u2 < -1.0:
             d = u2 + 1.0
-            u1 = u1 + d
+            u1 = u1 - d/2.0
             u2 = -1.0
 
         return u1, u2
