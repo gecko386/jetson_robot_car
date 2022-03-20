@@ -43,6 +43,7 @@ class Rover5(object):
         u1 = u + w*2/math.pi
         u2 = u - w*2/math.pi
 
+        """
         if u1 > 1.0:
             d = u1 - 1.0
             u2 = u2 - d/2.0
@@ -62,6 +63,24 @@ class Rover5(object):
             d = u2 + 1.0
             u1 = u1 - d/2.0
             u2 = -1.0
+        """
+
+        if abs(u1) > 1:
+            if abs(u2)>abs(u1):
+                u1 = u1/abs(u2)
+                u2 = u2/abs(u2)
+            else:
+                u1 = u1/abs(u1)
+                u2 = u2/abs(u1)
+        
+        if abs(u2) > 1:
+            if abs(u1)>abs(u2):
+                u1 = u1/abs(u1)
+                u2 = u2/abs(u1)
+            else:
+                u1 = u1/abs(u2)
+                u2 = u2/abs(u2)
+        
 
         return u1, u2
 
