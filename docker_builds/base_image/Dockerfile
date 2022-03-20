@@ -21,7 +21,7 @@ RUN git clone --depth 1 --branch `git ls-remote --tags https://github.com/IntelR
 WORKDIR /opt/ros_realsense/
 #RUN rosdep init
 RUN rosdep update
-RUN rosdep install -i --from-path src --rosdistro $_ros_dist --skip-keys=librealsense2 -y
+RUN rosdep install -i --from-path src --rosdistro "galactic" --skip-keys=librealsense2 -y
 RUN colcon build
 
 #install jetson-inference
