@@ -5,6 +5,7 @@ FROM ${BASE_IMAGE}
 RUN apt update && apt install -y --no-install-recommends \
         git \
 		curl \
+        cmake \
 		libboost-all-dev \
 		libopencv-dev \
 		python3-opencv \
@@ -23,6 +24,24 @@ WORKDIR /opt/ros_realsense/
 RUN rosdep init
 RUN rosdep update
 RUN rosdep install -i --from-path src --rosdistro $_ros_dist --skip-keys=librealsense2 -y
+RUN colcon build
+
+#install jetson-inference
+WORKDIR /opt
+RUN git clone --recursive https://github.com/dusty-nv/jetson-inference
+WORKDIR /opt/jetson-inference
+RUN mkdir build
+WORKDIR /opt/jetson-inference/build
+RUN cmake ../
+RUN make -j$(nproc)
+RUN make install
+RUN ldconfig
+
+#install ros_deep_learning packages
+RUN mkdir -p /opt/ros_deep_learning/src
+WORKDIR  /opt/ros_deep_learning/src
+RUN git clone https://github.com/dusty-nv/ros_deep_learning
+WORKDIR  /opt/ros_deep_learning/
 RUN colcon build
 
 # generate entrypoint
