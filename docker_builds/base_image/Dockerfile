@@ -1,13 +1,33 @@
 ARG BASE_IMAGE="ros:galactic-pytorch-l4t-r32.6.1"
 FROM ${BASE_IMAGE}
 
+
+RUN apt update && apt install -y --no-install-recommends \
+        git \
+		curl \
+		libboost-all-dev \
+		libopencv-dev \
+		python3-opencv \
+		python3-scipy \
+		qt5-default \
+        python3-pip \
+	 && rm -rf /var/lib/apt/lists/*;
+
 RUN pip3 install Jetson.GPIO
 
+#install realsense ros2 wrapper
+RUN mkdir -p /opt/ros_realsense/src
+WORKDIR /opt/ros_realsense/src
+RUN git clone --depth 1 --branch `git ls-remote --tags https://github.com/IntelRealSense/realsense-ros.git | grep -Po "(?<=tags/)3.\d+\.\d+" | sort -V | tail -1` https://github.com/IntelRealSense/realsense-ros.git
+WORKDIR /opt/ros_realsense/
+RUN rosdep init
+RUN rosdep update
+RUN rosdep install -i --from-path src --rosdistro $_ros_dist --skip-keys=librealsense2 -y
+RUN colcon build
+
 # generate entrypoint
-COPY ./update_entrypoint.sh /tmp/.
-RUN chmod 755 /tmp/update_entrypoint.sh
-RUN /tmp/update_entrypoint.sh
-RUN rm /tmp/update_entrypoint.sh
+COPY ./ros_entrypoint.sh /.
+RUN chmod 755 /ros_entrypoint.sh
 
 ENTRYPOINT ["/ros_entrypoint.sh"]
 CMD ["bash"]
