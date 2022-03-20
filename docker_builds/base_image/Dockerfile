@@ -31,8 +31,7 @@ WORKDIR /opt/ros_realsense/
 #RUN rosdep update
 #RUN rosdep install -i --from-path src --rosdistro "galactic" --os=ubuntu:galactic --skip-keys=librealsense2 -y
 
-RUN source "/opt/ros/galactic/install/setup.bash"
-RUN colcon build
+RUN source "/opt/ros/galactic/install/setup.bash" && colcon build
 
 #install jetson-inference
 WORKDIR /opt
