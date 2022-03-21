@@ -10,6 +10,11 @@ RUN apt update && apt install -y --no-install-recommends \
 		python3-scipy \
 		qt5-default \
         python3-pip \
+        libprotobuf-dev \ 
+        libleveldb-dev \
+        libsnappy-dev \
+        libhdf5-serial-dev \
+        protobuf-compiler \
 	&& rm -rf /var/lib/apt/lists/*;
 
 RUN pip3 install Jetson.GPIO
@@ -52,6 +57,13 @@ RUN source "/opt/ros/galactic/install/setup.bash" && \
     source "/opt/xacro/install/local_setup.bash" && \
     rosdep update && rosdep install -i --from-path src --rosdistro "galactic" --os=ubuntu:galactic --skip-keys="librealsense2 libopencv-dev" -y && \
     colcon build
+
+#install cafe
+WORKDIR /opt
+RUN git clone https://github.com/BVLC/caffe.git
+RUN mkdir -p /opt/caffe/build
+WORKDIR /opt/caffe/build
+RUN cmake .. && make all && make install
 
 #install jetson-inference
 WORKDIR /opt
