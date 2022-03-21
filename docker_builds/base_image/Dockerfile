@@ -27,7 +27,7 @@ WORKDIR /opt/
 RUN git clone https://github.com/YDLIDAR/ydlidar_ros2
 WORKDIR /opt/ydlidar_ros2
 RUN source "/opt/ros/galactic/install/setup.bash" && colcon build
-WORKDIR /opt/ydlidar_ros2/ydlidar_ros2/startup
+WORKDIR /opt/ydlidar_ros2/startup
 RUN chmod 755 initenv.sh
 RUN sh initenv.sh
 
