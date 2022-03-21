@@ -248,7 +248,7 @@ services:
       - "/sys/devices:/sys/devices"
       - "/dev:/dev"
 
-    command: ros2 run realsense_ros2_camera realsense_ros2_camera
+    command: ros2 run realsense2_camera realsense2_camera_node
     privileged: true
     network_mode: host
     deploy:
