@@ -15,6 +15,7 @@ RUN apt update && apt install -y --no-install-recommends \
         libsnappy-dev \
         libhdf5-serial-dev \
         liblmdb-dev \
+        libcudnn8-dev \
         protobuf-compiler \
 	&& rm -rf /var/lib/apt/lists/*;
 
