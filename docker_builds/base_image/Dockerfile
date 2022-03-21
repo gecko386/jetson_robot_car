@@ -36,7 +36,10 @@ WORKDIR /opt
 RUN git clone -b galactic https://github.com/ros/diagnostics
 WORKDIR /opt/diagnostics
 RUN source "/opt/ros/galactic/install/setup.bash" && colcon build
-RUN source install/local_setup.bash
+WORKDIR /opt
+RUN git clone -b ros2 https://github.com/ros/xacro.git
+WORKDIR /opt/xacro
+RUN source "/opt/ros/galactic/install/setup.bash" && colcon build
 
 #install realsense ros2 wrapper
 RUN mkdir -p /opt/ros_realsense/src
@@ -46,6 +49,7 @@ WORKDIR /opt/ros_realsense/
 #RUN rosdep init
 RUN source "/opt/ros/galactic/install/setup.bash" && \
     source "/opt/diagnostics/install/local_setup.bash" && \
+    source "/opt/xacro/install/local_setup.bash" && \
     rosdep update && rosdep install -i --from-path src --rosdistro "galactic" --os=ubuntu:galactic --skip-keys=librealsense2 -y && \
     colcon build
 
