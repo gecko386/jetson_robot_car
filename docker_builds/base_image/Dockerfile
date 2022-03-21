@@ -60,13 +60,6 @@ RUN source "/opt/ros/galactic/install/setup.bash" && \
     rosdep update && rosdep install -i --from-path src --rosdistro "galactic" --os=ubuntu:galactic --skip-keys="librealsense2 libopencv-dev" -y && \
     colcon build
 
-#install cafe
-WORKDIR /opt
-RUN git clone https://github.com/BVLC/caffe.git
-RUN mkdir -p /opt/caffe/build
-WORKDIR /opt/caffe/build
-RUN cmake .. && make all && make install
-
 #install cudnn
 WORKDIR /opt
 RUN wget https://developer.download.nvidia.com/compute/cuda/repos/${OS}/x86_64/cuda-${OS}.pin
@@ -77,6 +70,13 @@ RUN apt-get update
 RUN apt-get install libcudnn8=${cudnn_version}-1+${cuda_version}
 RUN apt-get install libcudnn8-dev=${cudnn_version}-1+${cuda_version}
 RUN rm -rf /var/lib/apt/lists/*
+
+#install cafe
+WORKDIR /opt
+RUN git clone https://github.com/BVLC/caffe.git
+RUN mkdir -p /opt/caffe/build
+WORKDIR /opt/caffe/build
+RUN cmake .. && make all && make install
 
 #install jetson-inference
 WORKDIR /opt
