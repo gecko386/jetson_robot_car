@@ -8,7 +8,6 @@ RUN apt update && apt install -y --no-install-recommends \
         cmake \
 		libboost-all-dev \
 		python3-scipy \
-        libopencv-dev \
 		qt5-default \
         python3-pip \
 	&& rm -rf /var/lib/apt/lists/*;
@@ -51,7 +50,7 @@ WORKDIR /opt/ros_realsense/
 RUN source "/opt/ros/galactic/install/setup.bash" && \
     source "/opt/diagnostics/install/local_setup.bash" && \
     source "/opt/xacro/install/local_setup.bash" && \
-    rosdep update && rosdep install -i --from-path src --rosdistro "galactic" --os=ubuntu:galactic --skip-keys=librealsense2 -y && \
+    rosdep update && rosdep install -i --from-path src --rosdistro "galactic" --os=ubuntu:galactic --skip-keys="librealsense2 libopencv-dev" -y && \
     colcon build
 
 #install jetson-inference
