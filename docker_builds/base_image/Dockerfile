@@ -62,13 +62,13 @@ RUN source "/opt/ros/galactic/install/setup.bash" && \
 
 #install cudnn
 WORKDIR /opt
-RUN wget https://developer.download.nvidia.com/compute/cuda/repos/${OS}/x86_64/cuda-${OS}.pin
-RUN mv cuda-${OS}.pin /etc/apt/preferences.d/cuda-repository-pin-600
-RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/${OS}/x86_64/7fa2af80.pub
-RUN add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/${OS}/x86_64/ /"
+RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/arm64/cuda-ubuntu1804.pin
+RUN mv cuda-ubuntu1804.pin /etc/apt/preferences.d/cuda-repository-pin-600
+RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/arm64/7fa2af80.pub
+RUN add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/arm64/ /"
 RUN apt-get update
-RUN apt-get install libcudnn8=${cudnn_version}-1+${cuda_version}
-RUN apt-get install libcudnn8-dev=${cudnn_version}-1+${cuda_version}
+RUN apt-get install libcudnn8=8.2.4.15-1+cuda10.2_arm64.deb
+RUN apt-get install libcudnn8-dev=8.2.4.15-1+cuda10.2_arm64.deb
 RUN rm -rf /var/lib/apt/lists/*
 
 #install cafe
