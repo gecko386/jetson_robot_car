@@ -233,3 +233,28 @@ services:
           - driver: nvidia
             device_ids: ['0']
             capabilities: [gpu]
+
+  realsense:
+    image: "base_image"
+    environment:
+      - ROS_DOMAIN_ID=1
+      - CYCLONEDDS_URI=file:///home/nvidia/jetson_robot_car/configs/dds/cyclone_config.xml
+      - DISPLAY=$DISPLAY
+      
+    volumes:
+      - "/tmp/.X11-unix:/tmp/.X11-unix"
+      - "/tmp/argus_socket:/tmp/argus_socket"
+      - "/home:/home"
+      - "/sys/devices:/sys/devices"
+      - "/dev:/dev"
+
+    command: ros2 run realsense_ros2_camera realsense_ros2_camera
+    privileged: true
+    network_mode: host
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            device_ids: ['0']
+            capabilities: [gpu]
