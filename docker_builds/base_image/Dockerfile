@@ -31,6 +31,13 @@ WORKDIR /opt/ydlidar_ros2/startup
 RUN chmod 755 initenv.sh
 RUN sh initenv.sh
 
+#install realsense dependencies
+WORKDIR /opt
+RUN git clone https://github.com/ros/diagnostics
+WORKDIR /opt/diagnostics
+RUN source "/opt/ros/galactic/install/setup.bash" && colcon build
+RUN source install/local_setup.bash
+
 #install realsense ros2 wrapper
 RUN mkdir -p /opt/ros_realsense/src
 WORKDIR /opt/ros_realsense/src
