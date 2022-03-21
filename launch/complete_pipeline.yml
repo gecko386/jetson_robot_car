@@ -218,7 +218,7 @@ services:
       - "/home:/home"
       - "/sys/devices:/sys/devices"
 
-    command: ros2 run ydldiar ydlidar_client --ros-args -p port:=/dev/ydlidar
+    command: ros2 run ydlidar ydlidar_client --ros-args -p port:=/dev/ydlidar
     privileged: true
     network_mode: host
     deploy:
