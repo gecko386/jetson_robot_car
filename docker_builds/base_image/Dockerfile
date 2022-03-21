@@ -90,11 +90,10 @@ RUN source "/opt/ros/galactic/install/setup.bash" && \
 #RUN ldconfig
 
 #install ros_deep_learning packages
-RUN mkdir -p /opt/ros_deep_learning/src
-WORKDIR  /opt/ros_deep_learning/src
+WORKDIR  /opt
 RUN git clone https://github.com/dusty-nv/ros_deep_learning
+WORKDIR  /opt/ros_deep_learning
 RUN source "/opt/ros/galactic/install/setup.bash" && \
-    cd ../ && \
     colcon build --symlink-install --event-handlers console_direct+
 
 # generate entrypoint
