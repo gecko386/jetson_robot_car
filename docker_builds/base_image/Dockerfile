@@ -1,4 +1,4 @@
-ARG BASE_IMAGE="ros:galactic-pytorch-l4t-r32.6.1"
+ARG BASE_IMAGE="dustynv/ros:galactic-pytorch-l4t-r32.6.1"
 FROM ${BASE_IMAGE}
 
 
@@ -61,40 +61,41 @@ RUN source "/opt/ros/galactic/install/setup.bash" && \
     colcon build
 
 #install cudnn
-WORKDIR /opt
-RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/arm64/cuda-ubuntu1804.pin
-RUN mv cuda-ubuntu1804.pin /etc/apt/preferences.d/cuda-repository-pin-600
-RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/arm64/7fa2af80.pub
-RUN add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/arm64/ /"
-RUN apt-get update
-RUN apt-get install libcudnn8=8.2.4.15-1+cuda10.2
-RUN apt-get install libcudnn8-dev=8.2.4.15-1+cuda10.2
-RUN rm -rf /var/lib/apt/lists/*
+#WORKDIR /opt
+#RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/arm64/cuda-ubuntu1804.pin
+#RUN mv cuda-ubuntu1804.pin /etc/apt/preferences.d/cuda-repository-pin-600
+#RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/arm64/7fa2af80.pub
+#RUN add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/arm64/ /"
+#RUN apt-get update
+#RUN apt-get install libcudnn8=8.2.4.15-1+cuda10.2
+#RUN apt-get install libcudnn8-dev=8.2.4.15-1+cuda10.2
+#RUN rm -rf /var/lib/apt/lists/*
 
 #install cafe
-WORKDIR /opt
-RUN git clone https://github.com/BVLC/caffe.git
-RUN mkdir -p /opt/caffe/build
-WORKDIR /opt/caffe/build
-RUN cmake .. && make all && make install
+#WORKDIR /opt
+#RUN git clone https://github.com/BVLC/caffe.git
+#RUN mkdir -p /opt/caffe/build
+#WORKDIR /opt/caffe/build
+#RUN cmake .. && make all && make install
 
 #install jetson-inference
-WORKDIR /opt
-RUN git clone --recursive https://github.com/dusty-nv/jetson-inference
-WORKDIR /opt/jetson-inference
-RUN mkdir build
-WORKDIR /opt/jetson-inference/build
-RUN cmake ../
-RUN make -j$(nproc)
-RUN make install
-RUN ldconfig
+#WORKDIR /opt
+#RUN git clone --recursive https://github.com/dusty-nv/jetson-inference
+#WORKDIR /opt/jetson-inference
+#RUN mkdir build
+#WORKDIR /opt/jetson-inference/build
+#RUN cmake ../
+#RUN make -j$(nproc)
+#RUN make install
+#RUN ldconfig
 
 #install ros_deep_learning packages
 RUN mkdir -p /opt/ros_deep_learning/src
 WORKDIR  /opt/ros_deep_learning/src
 RUN git clone https://github.com/dusty-nv/ros_deep_learning
-WORKDIR  /opt/ros_deep_learning/
-RUN colcon build
+RUN source "/opt/ros/galactic/install/setup.bash" && \
+    cd ../ && \
+    colcon build --symlink-install --event-handlers console_direct+
 
 # generate entrypoint
 COPY ./ros_entrypoint.sh /.
