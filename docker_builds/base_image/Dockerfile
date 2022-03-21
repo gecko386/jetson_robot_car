@@ -75,7 +75,7 @@ RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/
 RUN add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/${OS}/x86_64/ /"
 RUN apt-get update
 RUN apt-get install libcudnn8=${cudnn_version}-1+${cuda_version}
-RUN sudo apt-get install libcudnn8-dev=${cudnn_version}-1+${cuda_version}
+RUN apt-get install libcudnn8-dev=${cudnn_version}-1+${cuda_version}
 RUN rm -rf /var/lib/apt/lists/*
 
 #install jetson-inference
