@@ -1,5 +1,4 @@
-ros_deep_learning:
-  video_source:
+ros_deep_learning/video_source:
     ros__parameters:
       resource: "csi://0"
       width: 0
