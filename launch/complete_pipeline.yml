@@ -258,3 +258,29 @@ services:
           - driver: nvidia
             device_ids: ['0']
             capabilities: [gpu]
+
+  imx477:
+    image: "base_image"
+    environment:
+      - ROS_DOMAIN_ID=1
+      - CYCLONEDDS_URI=file:///home/nvidia/jetson_robot_car/configs/dds/cyclone_config.xml
+      - DISPLAY=$DISPLAY
+      
+    volumes:
+      - "/tmp/.X11-unix:/tmp/.X11-unix"
+      - "/tmp/argus_socket:/tmp/argus_socket"
+      - "/home:/home"
+      - "/sys/devices:/sys/devices"
+      - "/dev:/dev"
+      - "/home/nvidia/jetson_robot_car/configs/lidar:/params"
+
+    command: ros2 run ros_deep_learning video_source --ros-args --params-file /params/imx477.yml
+    privileged: true
+    network_mode: host
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            device_ids: ['0']
+            capabilities: [gpu]
