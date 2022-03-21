@@ -217,6 +217,7 @@ services:
       - "/tmp/argus_socket:/tmp/argus_socket"
       - "/home:/home"
       - "/sys/devices:/sys/devices"
+      - "/dev/ydlidar:/dev/ydlidar"
 
     devices:
       - "/dev/ydlidar:/dev/ydlidar"
