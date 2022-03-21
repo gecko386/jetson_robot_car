@@ -33,7 +33,7 @@ RUN sh initenv.sh
 
 #install realsense dependencies
 WORKDIR /opt
-RUN git clone https://github.com/ros/diagnostics
+RUN git clone -b galactic https://github.com/ros/diagnostics
 WORKDIR /opt/diagnostics
 RUN source "/opt/ros/galactic/install/setup.bash" && colcon build
 RUN source install/local_setup.bash
