@@ -274,7 +274,7 @@ services:
       - "/dev:/dev"
       - "/home/nvidia/jetson_robot_car/configs/cameras:/params"
 
-    command: ros2 run ros_deep_learning video_source --ros-args --params-file /params/imxhd.yml
+    command: ros2 run ros_deep_learning video_source --ros-args -p resource:="csi://0"
     privileged: true
     network_mode: host
     deploy:
