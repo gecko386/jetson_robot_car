@@ -218,11 +218,12 @@ services:
       - "/home:/home"
       - "/sys/devices:/sys/devices"
       - "/dev/ydlidar:/dev/ydlidar"
+      - "/home/nvidia/jetson_robot_car/configs/lidar:/params"
 
     devices:
       - "/dev/ydlidar:/dev/ydlidar"
 
-    command: ros2 run ydlidar ydlidar_client --ros-args -p port:=/dev/ydlidar
+    command: ros2 run ydlidar ydlidar_client --ros-args --params-file /params/ydlidar.yaml 
     privileged: true
     network_mode: host
     deploy:
