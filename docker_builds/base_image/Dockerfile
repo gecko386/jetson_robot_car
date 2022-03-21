@@ -6,6 +6,7 @@ RUN apt update && apt install -y --no-install-recommends \
         git \
 		curl \
         cmake \
+        wget \
 		libboost-all-dev \
 		python3-scipy \
 		qt5-default \
@@ -66,6 +67,17 @@ RUN git clone https://github.com/BVLC/caffe.git
 RUN mkdir -p /opt/caffe/build
 WORKDIR /opt/caffe/build
 RUN cmake .. && make all && make install
+
+#install cudnn
+WORKDIR /opt
+RUN wget https://developer.download.nvidia.com/compute/cuda/repos/${OS}/x86_64/cuda-${OS}.pin
+RUN mv cuda-${OS}.pin /etc/apt/preferences.d/cuda-repository-pin-600
+RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/${OS}/x86_64/7fa2af80.pub
+RUN add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/${OS}/x86_64/ /"
+RUN apt-get update
+RUN apt-get install libcudnn8=${cudnn_version}-1+${cuda_version}
+RUN sudo apt-get install libcudnn8-dev=${cudnn_version}-1+${cuda_version}
+RUN rm -rf /var/lib/apt/lists/*
 
 #install jetson-inference
 WORKDIR /opt
