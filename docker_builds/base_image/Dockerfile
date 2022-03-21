@@ -14,6 +14,7 @@ RUN apt update && apt install -y --no-install-recommends \
         libleveldb-dev \
         libsnappy-dev \
         libhdf5-serial-dev \
+        liblmdb-dev \
         protobuf-compiler \
 	&& rm -rf /var/lib/apt/lists/*;
 
