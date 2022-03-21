@@ -1,9 +1,0 @@
-video_source:
-  ros__parameters:
-    resource: "csi://0"
-    width: 0
-    height: 0
-    codec: "unknown"
-    loop: 0
-    framerate: 0
-    flip: ""
