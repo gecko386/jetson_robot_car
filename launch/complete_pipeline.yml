@@ -223,7 +223,7 @@ services:
     devices:
       - "/dev/ydlidar:/dev/ydlidar"
 
-    command: ros2 run ydlidar ydlidar_client --ros-args --params-file /params/ydlidar.yaml 
+    command: ros2 run ydlidar ydlidar_client --ros-args --params-file /params/ydlidar.yml
     privileged: true
     network_mode: host
     deploy:
