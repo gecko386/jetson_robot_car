@@ -17,6 +17,7 @@ RUN apt update && apt install -y --no-install-recommends \
         libhdf5-serial-dev \
         liblmdb-dev \
         protobuf-compiler \
+        software-properties-common \
 	&& rm -rf /var/lib/apt/lists/*;
 
 RUN pip3 install Jetson.GPIO
