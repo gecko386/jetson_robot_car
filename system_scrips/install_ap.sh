@@ -3,7 +3,7 @@
 source $(dirname $0)/utils.sh
 information "#### configure access point ####"
 
-sudo apt install -y libgtk-3-dev build-essential gcc g++ pkg-config make hostapd git
+sudo apt install -y libgtk-3-dev build-essential gcc g++ pkg-config make hostapd git libqrencode-dev
 exit_if_last_command_failed "Cannot install dependencies. Please, check logs"
 
 cd access_point
