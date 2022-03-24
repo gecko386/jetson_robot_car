@@ -1,4 +1,4 @@
-ARG BASE_IMAGE="dustynv/ros:galactic-pytorch-l4t-r32.6.1"
+ARG BASE_IMAGE="dustynv/ros:galactic-pytorch-l4t-r32.5.0"
 FROM ${BASE_IMAGE}
 
 
