@@ -2,6 +2,10 @@
 
 source $(dirname $0)/utils.sh
 
+information "### configure docker to use nvidia-runtime by default ###"
+sudo cp docker-config/daemon.json /etc/docker/.
+sudo systemctl restart docker.service
+exit_if_last_command_failed "Cannot configure docker. Please, check logs"
 
 information "### Create docker container with ROS2 Galactic and pytorch ###"
 git clone https://github.com/dusty-nv/jetson-containers.git
