@@ -2,6 +2,10 @@
 
 source $(dirname $0)/utils.sh
 
+information "### add user to docker group"
+sudo usermod -aG docker $USER
+exit_if_last_command_failed "Cannot add user to docker group. Please, check logs"
+
 information "### configure docker to use nvidia-runtime by default ###"
 sudo cp docker-config/daemon.json /etc/docker/.
 sudo systemctl restart docker.service
