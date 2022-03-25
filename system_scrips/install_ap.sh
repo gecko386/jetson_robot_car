@@ -3,6 +3,9 @@
 source $(dirname $0)/utils.sh
 information "#### configure access point ####"
 
+information "#### set wifi card to a fixed interface ###"
+sudo echo 'SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTRS{idVendor}=="0bda", ATTRS{idProduct}=="b812", ATTR{type}=="1", NAME="wlan1"' >/etc/udev/rules.d/ap-card.rules
+
 sudo apt install -y libgtk-3-dev build-essential gcc g++ pkg-config make hostapd git libqrencode-dev
 exit_if_last_command_failed "Cannot install dependencies. Please, check logs"
 
