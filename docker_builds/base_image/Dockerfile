@@ -95,7 +95,7 @@ WORKDIR  /opt
 RUN git clone https://github.com/dusty-nv/ros_deep_learning
 WORKDIR  /opt/ros_deep_learning
 RUN source "/opt/ros/galactic/install/setup.bash" && \
-    colcon build --symlink-install --event-handlers console_direct+
+    colcon build --symlink-install
 
 # generate entrypoint
 COPY ./ros_entrypoint.sh /.
