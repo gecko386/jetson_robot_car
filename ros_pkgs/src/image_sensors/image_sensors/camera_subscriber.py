@@ -16,14 +16,16 @@ class CameraSubscriber(Node):
         """
         # Initiate the Node class's constructor and give it a name
         super().__init__('camera_subscriber')
+
+        self.declare_parameter('image_topic', "")
         
         # Create the subscriber. This subscriber will receive an Image
         # from the video_frames topic. The queue size is 10 messages.
         self.subscription = self.create_subscription(
-        CompressedImage, 
-        'video_frames', 
+        Image, 
+        self.get_parameter('image_topic').get_parameter_value().string_value,
         self.listener_callback, 
-        10)
+        50)
         self.subscription # prevent unused variable warning
         
         # Used to convert between ROS and OpenCV images
@@ -37,7 +39,7 @@ class CameraSubscriber(Node):
         # self.get_logger().info('Receiving video frame')
 
         # Convert ROS Image message to OpenCV image
-        current_frame = self.br.compressed_imgmsg_to_cv2(data)
+        current_frame = self.br.imgmsg_to_cv2(data)
         
         # Display image
         cv2.imshow("camera", current_frame)

@@ -1,0 +1,35 @@
+running egg_info
+creating ../build/distance_sensors/distance_sensors.egg-info
+writing ../build/distance_sensors/distance_sensors.egg-info/PKG-INFO
+writing dependency_links to ../build/distance_sensors/distance_sensors.egg-info/dependency_links.txt
+writing entry points to ../build/distance_sensors/distance_sensors.egg-info/entry_points.txt
+writing requirements to ../build/distance_sensors/distance_sensors.egg-info/requires.txt
+writing top-level names to ../build/distance_sensors/distance_sensors.egg-info/top_level.txt
+writing manifest file '../build/distance_sensors/distance_sensors.egg-info/SOURCES.txt'
+reading manifest file '../build/distance_sensors/distance_sensors.egg-info/SOURCES.txt'
+writing manifest file '../build/distance_sensors/distance_sensors.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/ruben/projects/ros2/jetson_robot_car/src/build/distance_sensors/build
+creating /home/ruben/projects/ros2/jetson_robot_car/src/build/distance_sensors/build/lib
+creating /home/ruben/projects/ros2/jetson_robot_car/src/build/distance_sensors/build/lib/distance_sensors
+copying distance_sensors/ultrasound_publisher.py -> /home/ruben/projects/ros2/jetson_robot_car/src/build/distance_sensors/build/lib/distance_sensors
+copying distance_sensors/__init__.py -> /home/ruben/projects/ros2/jetson_robot_car/src/build/distance_sensors/build/lib/distance_sensors
+running install
+running install_lib
+creating /home/ruben/projects/ros2/jetson_robot_car/src/install/distance_sensors/lib/python3.8/site-packages/distance_sensors
+copying /home/ruben/projects/ros2/jetson_robot_car/src/build/distance_sensors/build/lib/distance_sensors/ultrasound_publisher.py -> /home/ruben/projects/ros2/jetson_robot_car/src/install/distance_sensors/lib/python3.8/site-packages/distance_sensors
+copying /home/ruben/projects/ros2/jetson_robot_car/src/build/distance_sensors/build/lib/distance_sensors/__init__.py -> /home/ruben/projects/ros2/jetson_robot_car/src/install/distance_sensors/lib/python3.8/site-packages/distance_sensors
+byte-compiling /home/ruben/projects/ros2/jetson_robot_car/src/install/distance_sensors/lib/python3.8/site-packages/distance_sensors/ultrasound_publisher.py to ultrasound_publisher.cpython-38.pyc
+byte-compiling /home/ruben/projects/ros2/jetson_robot_car/src/install/distance_sensors/lib/python3.8/site-packages/distance_sensors/__init__.py to __init__.cpython-38.pyc
+running install_data
+creating /home/ruben/projects/ros2/jetson_robot_car/src/install/distance_sensors/share/ament_index
+creating /home/ruben/projects/ros2/jetson_robot_car/src/install/distance_sensors/share/ament_index/resource_index
+creating /home/ruben/projects/ros2/jetson_robot_car/src/install/distance_sensors/share/ament_index/resource_index/packages
+copying resource/distance_sensors -> /home/ruben/projects/ros2/jetson_robot_car/src/install/distance_sensors/share/ament_index/resource_index/packages
+copying package.xml -> /home/ruben/projects/ros2/jetson_robot_car/src/install/distance_sensors/share/distance_sensors
+running install_egg_info
+Copying ../build/distance_sensors/distance_sensors.egg-info to /home/ruben/projects/ros2/jetson_robot_car/src/install/distance_sensors/lib/python3.8/site-packages/distance_sensors-0.0.0-py3.8.egg-info
+running install_scripts
+Installing ultrasound_publisher script to /home/ruben/projects/ros2/jetson_robot_car/src/install/distance_sensors/lib/distance_sensors
+writing list of installed files to '/home/ruben/projects/ros2/jetson_robot_car/src/build/distance_sensors/install.log'
