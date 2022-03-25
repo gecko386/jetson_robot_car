@@ -55,11 +55,11 @@ WORKDIR /opt/ros_realsense/src
 RUN git clone --depth 1 --branch `git ls-remote --tags https://github.com/IntelRealSense/realsense-ros.git | grep -Po "(?<=tags/)3.\d+\.\d+" | sort -V | tail -1` https://github.com/IntelRealSense/realsense-ros.git
 WORKDIR /opt/ros_realsense/
 #RUN rosdep init
-RUN source "/opt/ros/galactic/install/setup.bash" && \
+RUN /bin/bash -c 'source "/opt/ros/galactic/install/setup.bash" && \
     source "/opt/diagnostics/install/local_setup.bash" && \
     source "/opt/xacro/install/local_setup.bash" && \
     rosdep update && rosdep install -i --from-path src --rosdistro "galactic" --os=ubuntu:galactic --skip-keys="librealsense2 libopencv-dev" -y && \
-    colcon build
+    colcon build'
 
 #install cudnn
 #WORKDIR /opt
@@ -94,8 +94,8 @@ RUN source "/opt/ros/galactic/install/setup.bash" && \
 WORKDIR  /opt
 RUN git clone https://github.com/dusty-nv/ros_deep_learning
 WORKDIR  /opt/ros_deep_learning
-RUN source "/opt/ros/galactic/install/setup.bash" && \
-    colcon build --symlink-install
+RUN /bin/bash -c 'source /opt/ros/galactic/install/setup.bash && \
+    colcon build --symlink-install'
 
 # generate entrypoint
 COPY ./ros_entrypoint.sh /.
