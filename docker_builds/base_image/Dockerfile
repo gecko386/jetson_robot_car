@@ -93,7 +93,7 @@ RUN /bin/bash -c 'source "/opt/ros/galactic/install/setup.bash" && \
 #install ros_deep_learning packages
 RUN mkdir -p /opt/ros_dl/src
 RUN source /opt/ros/galactic/install/setup.bash && \
-    cd opt/ros_dl/src && \
+    cd /opt/ros_dl/src && \
     git clone https://github.com/dusty-nv/ros_deep_learning && \
     cd ../ && \
     colcon build --symlink-install --event-handlers console_direct+
