@@ -97,7 +97,7 @@ WORKDIR  /opt/ros_deep_learning
 RUN /bin/bash -c 'source "/opt/ros/galactic/install/setup.bash" && \
     source "/opt/diagnostics/install/local_setup.bash" && \
     source "/opt/xacro/install/local_setup.bash" && \
-    colcon build --symlink-install'
+    colcon build'
 
 # generate entrypoint
 COPY ./ros_entrypoint.sh /.
