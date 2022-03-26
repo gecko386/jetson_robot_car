@@ -95,7 +95,7 @@ RUN mkdir -p /opt/ros_deep_learning/src
 WORKDIR  /opt/ros_deep_learning/src
 RUN git clone https://github.com/dusty-nv/ros_deep_learning
 WORKDIR  /opt/ros_deep_learning
-RUN colcon build
+RUN /bin/bash -c 'source "/opt/ros/galactic/install/setup.bash" && colcon build'
 
 # generate entrypoint
 COPY ./ros_entrypoint.sh /.
