@@ -91,13 +91,11 @@ RUN /bin/bash -c 'source "/opt/ros/galactic/install/setup.bash" && \
 #RUN ldconfig
 
 #install ros_deep_learning packages
-WORKDIR  /opt
+RUN mkdir -p /opt/ros_deep_learning/src
+WORKDIR  /opt/ros_deep_learning/src
 RUN git clone https://github.com/dusty-nv/ros_deep_learning
 WORKDIR  /opt/ros_deep_learning
-RUN /bin/bash -c 'source "/opt/ros/galactic/install/setup.bash" && \
-    source "/opt/diagnostics/install/local_setup.bash" && \
-    source "/opt/xacro/install/local_setup.bash" && \
-    colcon build'
+RUN colcon build
 
 # generate entrypoint
 COPY ./ros_entrypoint.sh /.
