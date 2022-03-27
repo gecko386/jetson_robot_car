@@ -43,7 +43,7 @@ class UltrasoundPublisher(Node):
         GPIO.setup(self.get_parameter('echo_pin').get_parameter_value().integer_value, GPIO.IN)
 
         self._publisher = self.create_publisher(Range, 'us_'+self.get_parameter('ultrasound_id').get_parameter_value().string_value, 10)
-        timer_period = 0.3  # seconds
+        timer_period = 0.5  # seconds
       
         # Create the timer
         self.timer = self.create_timer(timer_period, self.timer_callback)
@@ -56,23 +56,23 @@ class UltrasoundPublisher(Node):
         # set Trigger to HIGH
         GPIO.output(self.get_parameter('trigger_pin').get_parameter_value().integer_value, True)
 
-        # set Trigger after 0.01ms to LOW
-        time.sleep(0.00001)
+        # set Trigger after 0.1ms to LOW
+        time.sleep(0.0001)
         GPIO.output(self.get_parameter('trigger_pin').get_parameter_value().integer_value, False)
 
-
-        start_time = time.time()
         # save StartTime
         #self.get_logger().info('Publishing ultrasound_'+self.get_parameter('ultrasound_id').get_parameter_value().string_value+'wait 0')
-        while GPIO.input(self.get_parameter('echo_pin').get_parameter_value().integer_value) == 0:
-            start_time = time.time()
+        GPIO.wait_for_edge(self.get_parameter('echo_pin').get_parameter_value().integer_value, GPIO.RISING)   
+        start_time = time.time()
 
         # save time of arrival
-        stop_time = time.time()
+        #stop_time = time.time()
         #self.get_logger().info('Publishing ultrasound_'+self.get_parameter('ultrasound_id').get_parameter_value().string_value+'wait 1')
-        while GPIO.input(self.get_parameter('echo_pin').get_parameter_value().integer_value) == 1:
-            stop_time = time.time()
-
+        ret = GPIO.wait_for_edge(self.get_parameter('echo_pin').get_parameter_value().integer_value, GPIO.FALLING, timeout=1000)
+        if ret is None:
+            return
+            
+        stop_time = time.time()
 
         GPIO.output(self.get_parameter('trigger_pin').get_parameter_value().integer_value, False)
 
