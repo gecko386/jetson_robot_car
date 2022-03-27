@@ -42,7 +42,7 @@ class UltrasoundPublisher(Node):
         GPIO.setup(self.get_parameter('trigger_pin').get_parameter_value().integer_value, GPIO.OUT)
         GPIO.setup(self.get_parameter('echo_pin').get_parameter_value().integer_value, GPIO.IN)
 
-        self._publisher = self.create_publisher(Range, 'us_'+self.get_parameter('ultrasound_id').get_parameter_value().string_value, 10)
+        self._publisher = self.create_publisher(Range, 'us_'+self.get_parameter('ultrasound_id').get_parameter_value().string_value, 50)
         timer_period = 0.5  # seconds
       
         # Create the timer
@@ -68,10 +68,10 @@ class UltrasoundPublisher(Node):
         # save time of arrival
         #stop_time = time.time()
         #self.get_logger().info('Publishing ultrasound_'+self.get_parameter('ultrasound_id').get_parameter_value().string_value+'wait 1')
-        ret = GPIO.wait_for_edge(self.get_parameter('echo_pin').get_parameter_value().integer_value, GPIO.FALLING, timeout=1000)
+        ret = GPIO.wait_for_edge(self.get_parameter('echo_pin').get_parameter_value().integer_value, GPIO.FALLING, timeout=300)
         if ret is None:
             return
-            
+
         stop_time = time.time()
 
         GPIO.output(self.get_parameter('trigger_pin').get_parameter_value().integer_value, False)
